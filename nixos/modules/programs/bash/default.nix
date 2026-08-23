@@ -14,7 +14,7 @@
     shellAliases = {
       grep = "grep --color='auto'";
       lg = "lazygit";
-      ls = "ls --color=auto";
+      ls = "ls --hyperlink=auto --color=auto";
       ncg = "nix-collect-garbage -d";
       oc = "opencode";
     };

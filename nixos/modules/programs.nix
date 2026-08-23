@@ -6,7 +6,10 @@ in
 
 {
   programs = {
-    dconf = { enable = true; }; # https://gitlab.gnome.org/GNOME/dconf
+    # https://gitlab.gnome.org/GNOME/dconf
+    # used by evince
+    dconf = { enable = true; };
+
     hyprland = {
       enable = true;
       package = inputs.hyprland.packages.${system}.hyprland;
