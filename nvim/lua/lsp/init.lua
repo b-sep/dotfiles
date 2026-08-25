@@ -5,6 +5,7 @@ local on_attach = require('lsp.diagnostics').on_attach
 local servers = {
   'clangd',
   'cssls',
+  'elixirls',
   'html',
   'lua_ls',
   'solargraph',
