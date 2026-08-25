@@ -11,6 +11,7 @@
     extraPackages = with pkgs; [
       basedpyright
       clang-tools
+      elixir-ls
       lua-language-server
       typescript-language-server
       vscode-langservers-extracted
