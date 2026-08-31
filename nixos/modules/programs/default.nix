@@ -14,6 +14,10 @@
       theme = "followSystem";
     };
 
+    bat = {
+      enable = true;
+    };
+
     btop = {
       enable = true;
     };
@@ -34,6 +38,12 @@
 
     discord = {
       enable = true;
+    };
+
+    fastfetch = {
+      enable = true;
+      # TODO: settings
+      # settings = {}
     };
 
     fd = {
