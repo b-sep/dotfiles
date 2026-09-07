@@ -3,6 +3,7 @@ require('lsp.diagnostics').setup()
 local on_attach = require('lsp.diagnostics').on_attach
 
 local servers = {
+  'basedpyright',
   'clangd',
   'cssls',
   'elixirls',
