@@ -112,7 +112,6 @@
     nautilus
     nodejs_24
     nwg-look # gtk theme configuration
-    inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode
     ruby_4_0
     spotify
     steam-run

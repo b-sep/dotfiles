@@ -42,8 +42,46 @@
 
     fastfetch = {
       enable = true;
-      # TODO: settings
-      # settings = {}
+      settings = {
+        logo = {
+          source = "nixos_small";
+          padding = {
+            right = 2;
+          };
+        };
+        display = {
+          separator = "   ";
+          key = {
+            width = 6;
+          };
+        };
+        modules = [
+          {
+            type = "os";
+            key = "OS";
+          }
+          {
+            type = "kernel";
+            key = "KER";
+          }
+          {
+            type = "packages";
+            key = "PKG";
+          }
+          {
+            type = "shell";
+            key = "SH";
+          }
+          {
+            type = "terminal";
+            key = "TER";
+          }
+          {
+            type = "wm";
+            key = "WM";
+          }
+        ];
+      };
     };
 
     fd = {

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, inputs, pkgs, ... }:
 
 # https://nix-community.github.io/home-manager/preface.html
 
@@ -26,6 +26,7 @@
       loupe
       man-pages
       mlocate
+      inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode
       tree
       valgrind
     ];
