@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   imports = [
@@ -20,6 +20,18 @@
 
     btop = {
       enable = true;
+    };
+
+    claude-code = {
+      enable = true;
+      mcpServers = {
+        github = {
+          headers.Authorization = "Bearer \${GITHUB_PERSONAL_TOKEN}";
+          type = "http";
+          url = "https://api.githubcopilot.com/mcp/";
+        };
+      };
+      package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code;
     };
 
     dbeaver = {
@@ -114,6 +126,16 @@
       enable = true;
     };
 
+    mcp = {
+      enable = true;
+      servers = {
+        github = {
+          headers.Authorization = "Bearer {env:GITHUB_PERSONAL_TOKEN}";
+          url = "https://api.githubcopilot.com/mcp/";
+        };
+      };
+    };
+
     obs-studio = {
       enable = true;
     };
@@ -125,6 +147,12 @@
       };
     };
 
+    opencode = {
+      enable = true;
+      enableMcpIntegration = true;
+      package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
+    };
+
     quickshell = {
       enable = true;
       systemd = {
@@ -133,6 +161,10 @@
     };
 
     ripgrep = {
+      enable = true;
+    };
+
+    tmux = {
       enable = true;
     };
   };

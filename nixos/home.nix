@@ -22,11 +22,11 @@
       gnumake
       hyprpaper
       hyprpicker
+      insomnia
       logisim-evolution
       loupe
       man-pages
       mlocate
-      inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode
       tree
       valgrind
     ];

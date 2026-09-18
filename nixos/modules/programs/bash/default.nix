@@ -10,6 +10,8 @@
       }
 
       PS1="\[\033[1;32m\][\u@\h:\w]\$(if branch=\$(parse_git_branch); then [ -n \"\$branch\" ] && echo \"\[\033[0;36m\](\$branch)\"; fi)\[\033[1;32m\] \$ \[\033[0m\]"
+
+      export GITHUB_PERSONAL_TOKEN="$(cat ~/.config/ghmcp.txt)"
     '';
     shellAliases = {
       ff   = "fastfetch";
