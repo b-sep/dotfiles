@@ -14,7 +14,7 @@ return {
   settings = {
     Lua = {
       diagnostics = {
-        globals = { 'vim' }
+        globals = { 'hl', 'vim' } -- hl = hyprland
       }
     }
   }
