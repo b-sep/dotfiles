@@ -3,6 +3,7 @@
 {
   imports = [
     ./bash
+    ./ghostty
     ./git
     ./kitty
     ./neovim
@@ -32,6 +33,9 @@
         };
       };
       package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code;
+      skills = {
+        teach = "${inputs.mattpocock-skills}/skills/productivity/teach";
+      };
     };
 
     dbeaver = {
@@ -122,6 +126,10 @@
       enable = true;
     };
 
+    k9s = {
+      enable = true;
+    };
+
     lazygit = {
       enable = true;
     };
@@ -166,6 +174,11 @@
 
     tmux = {
       enable = true;
+    };
+
+    vscode = {
+      enable = true;
+      mutableExtensionsDir = true;
     };
   };
 }

@@ -1,0 +1,31 @@
+# fonts
+font-family = JetBrainsMonoNL Nerd Font
+font-size = 16
+
+# style
+background-opacity = 0.7
+window-padding-balance = true
+
+# keymaps
+keybind = performable:ctrl+c=copy_to_clipboard
+keybind = ctrl+shift+e=new_split:down
+keybind = ctrl+shift+backslash=new_split:right
+keybind = ctrl+alt+h=resize_split:left,10
+keybind = ctrl+alt+j=resize_split:down,10
+keybind = ctrl+alt+k=resize_split:up,10
+keybind = ctrl+alt+l=resize_split:right,10
+keybind = ctrl+shift+z=toggle_split_zoom
+keybind = ctrl+shift+comma=reload_config
+keybind = ctrl+shift+h=goto_split:left
+keybind = ctrl+shift+j=goto_split:down
+keybind = ctrl+shift+k=goto_split:up
+keybind = ctrl+shift+l=goto_split:right
+
+# new windows/tabs already inherit the current working directory in Ghostty
+# "super" = tecla Windows/Meta (a mesma usada como mainMod no hyprland.lua)
+keybind = super+enter=new_split:auto
+keybind = super+t=new_tab
+keybind = super+n=new_window
+
+# theme
+theme = Adventure

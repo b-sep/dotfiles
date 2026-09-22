@@ -32,6 +32,16 @@
     extraLocaleSettings = {
       LC_TIME = "pt_BR.UTF-8";
     };
+
+    # required for GTK4 apps (e.g. Ghostty) to honor the XKB compose key
+    # (compose:rctrl, set in hyprland.lua).
+    # https://github.com/ghostty-org/ghostty/discussions/5056
+    # https://github.com/ghostty-org/ghostty/discussions/9250
+    #
+    inputMethod = {
+      enable = true;
+      type = "ibus";
+    };
   };
 
   # set google public dns

@@ -15,6 +15,11 @@
       url = "github:numtide/llm-agents.nix";
     };
 
+    mattpocock-skills = {
+      flake = false;
+      url = "github:mattpocock/skills";
+    };
+
     nixpkgs = {
       url = "github:NixOS/nixpkgs/nixos-unstable";
     };

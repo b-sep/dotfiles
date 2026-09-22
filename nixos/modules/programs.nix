@@ -7,7 +7,8 @@ in
 {
   programs = {
     # https://gitlab.gnome.org/GNOME/dconf
-    # used by evince
+    # used by evince (also force-enabled by i18n.inputMethod's ibus module,
+    # but kept explicit here since evince's need is independent of ibus)
     dconf = { enable = true; };
 
     hyprland = {

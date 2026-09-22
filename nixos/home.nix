@@ -76,6 +76,16 @@
   services = {
     dunst = {
       enable = true;
+
+      settings = {
+        # IBus always shows this on login on non-GNOME/KDE Wayland sessions,
+        # even when correctly configured. Harmless, just noise; drop it.
+        ignore_ibus_wayland_notice = {
+          category = "wayland";
+          appname = "ibus";
+          skip_display = true;
+        };
+      };
     };
 
     elephant = {
