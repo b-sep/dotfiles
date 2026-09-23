@@ -126,7 +126,6 @@
     spotify
     steam-run
     stremio-linux-shell
-    walker
     wget
     wl-clipboard
     unzip

@@ -106,5 +106,12 @@
         ];
       };
     };
+
+    walker = {
+      enable = true;
+      # runs `walker --gapplication-service` as a user unit; since
+      # elephant is enabled, it Requires/starts After elephant.service
+      systemd.enable = true;
+    };
   };
 }
