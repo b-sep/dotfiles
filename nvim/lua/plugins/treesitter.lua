@@ -4,7 +4,7 @@ return {
   lazy = false,
   build = ':TSUpdate',
   init = function()
-    ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'ruby', 'typescript', 'python', 'elixir', 'javascript', 'html', 'css', 'erlang', 'sql', 'nix' }
+    local ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'ruby', 'typescript', 'python', 'elixir', 'javascript', 'html', 'css', 'erlang', 'sql', 'nix' }
     local alreadyInstalled = require('nvim-treesitter.config').get_installed()
     local parsersToInstall = vim.iter(ensure_installed)
       :filter(function(parser)
