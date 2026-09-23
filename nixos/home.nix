@@ -107,6 +107,12 @@
       };
     };
 
+    # blue-light filter daemon; the quickshell bar's night light indicator
+    # toggles it via `hyprctl hyprsunset temperature|identity`
+    hyprsunset = {
+      enable = true;
+    };
+
     walker = {
       enable = true;
       # runs `walker --gapplication-service` as a user unit; since
