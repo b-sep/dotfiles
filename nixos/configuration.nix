@@ -44,25 +44,19 @@
     };
   };
 
-  # set google public dns
-  environment.etc."resolv.conf".text = ''
-    nameserver 8.8.8.8
-    nameserver 8.8.4.4
-    options edns0
-  '';
-
   networking = {
     # Set hostname
     hostName = "nix";
 
     # Configure network connections interactively with nmcli or nmtui.
+    #
+    # DNS is set per connection profile (ipv4/ipv6.dns + ignore-auto-dns) and
+    # NetworkManager writes /etc/resolv.conf through resolvconf (NixOS default).
+    # The quickshell bar's network popup switches providers with nmcli; the
+    # choice lives in /etc/NetworkManager/system-connections and survives
+    # reboots and rebuilds.
     networkmanager = {
-      dns = "none";
       enable = true;
-    };
-
-    resolvconf = {
-      enable = false;
     };
   };
 

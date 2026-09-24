@@ -33,7 +33,7 @@ BarButton {
     component Label: Text {
         color: Theme.muted
         font.family: Theme.font
-        font.pixelSize: Theme.smallSize
+        font.pixelSize: Theme.popupSmallSize
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }
@@ -41,7 +41,7 @@ BarButton {
     BarPopup {
         id: popup
         anchorItem: root
-        spacing: 18
+        spacing: 14
 
         property int month: root.now.getMonth()
         property int year: root.now.getFullYear()
@@ -61,19 +61,19 @@ BarButton {
         // Header: big "23 de setembro".
         RowLayout {
             Layout.alignment: Qt.AlignHCenter
-            spacing: 18
+            spacing: 14
 
             Text {
                 text: Theme.icon(0xF00ED)
                 color: Theme.fg
                 font.family: Theme.font
-                font.pixelSize: 48
+                font.pixelSize: 36
             }
             Text {
                 text: Theme.locale.toString(root.now, "d 'de' MMMM")
                 color: Theme.fgBright
                 font.family: Theme.font
-                font.pixelSize: 44
+                font.pixelSize: 32
                 font.bold: true
             }
         }
@@ -103,7 +103,7 @@ BarButton {
             rowSpacing: 6
 
             Label {
-                Layout.preferredWidth: 44
+                Layout.preferredWidth: 36
                 text: "S"
             }
 
@@ -118,7 +118,7 @@ BarButton {
             }
 
             WeekNumberColumn {
-                Layout.preferredWidth: 44
+                Layout.preferredWidth: 36
                 Layout.fillHeight: true
                 month: popup.month
                 year: popup.year
@@ -143,8 +143,8 @@ BarButton {
                 year: popup.year
                 locale: Theme.locale
                 spacing: 0
-                implicitWidth: 7 * 60
-                implicitHeight: 6 * 42
+                implicitWidth: 7 * 48
+                implicitHeight: 6 * 34
 
                 MouseArea {
                     anchors.fill: parent
@@ -156,13 +156,13 @@ BarButton {
                     required property var model
                     readonly property bool inMonth: model.month === popup.month
 
-                    implicitWidth: 60
-                    implicitHeight: 42
+                    implicitWidth: 48
+                    implicitHeight: 34
 
                     Rectangle {
                         anchors.centerIn: parent
-                        width: 50
-                        height: 36
+                        width: 40
+                        height: 28
                         color: "transparent"
                         border.color: Theme.fg
                         border.width: 1
@@ -175,7 +175,7 @@ BarButton {
                         color: model.today ? Theme.fgBright
                              : inMonth ? Theme.fg : Theme.alpha(Theme.muted, 0.6)
                         font.family: Theme.font
-                        font.pixelSize: Theme.fontSize - 1
+                        font.pixelSize: Theme.popupFontSize - 1
                         font.bold: model.today
                     }
                 }
@@ -197,7 +197,7 @@ BarButton {
                 text: Theme.locale.toString(new Date(popup.year, popup.month, 1), "MMMM yyyy").toUpperCase()
                 color: Theme.muted
                 font.family: Theme.font
-                font.pixelSize: Theme.smallSize
+                font.pixelSize: Theme.popupSmallSize
                 font.letterSpacing: 2
 
                 MouseArea {

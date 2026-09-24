@@ -72,7 +72,7 @@ BarButton {
         BarButton {
             text: row.icon !== "" ? row.icon : root.volumeIcon(row.node?.audio?.muted ?? false, row.node?.audio?.volume ?? 0)
             color: row.node?.audio?.muted ? Theme.muted : Theme.fg
-            fixedWidth: 36
+            fixedWidth: 30
             onClicked: if (row.node?.audio) row.node.audio.muted = !row.node.audio.muted
         }
 
@@ -87,7 +87,7 @@ BarButton {
                 elide: Text.ElideRight
                 color: Theme.fg
                 font.family: Theme.font
-                font.pixelSize: Theme.smallSize + 1
+                font.pixelSize: Theme.popupSmallSize + 1
             }
 
             Slider {
@@ -99,12 +99,12 @@ BarButton {
         }
 
         Text {
-            Layout.preferredWidth: 52
+            Layout.preferredWidth: 44
             horizontalAlignment: Text.AlignRight
             text: Math.round((row.node?.audio?.volume ?? 0) * 100) + "%"
             color: Theme.muted
             font.family: Theme.font
-            font.pixelSize: Theme.smallSize + 1
+            font.pixelSize: Theme.popupSmallSize + 1
         }
     }
 
@@ -115,7 +115,7 @@ BarButton {
         signal picked()
 
         Layout.fillWidth: true
-        implicitHeight: 38
+        implicitHeight: 30
 
         Rectangle {
             anchors.fill: parent
@@ -133,7 +133,7 @@ BarButton {
             elide: Text.ElideRight
             color: dev.selected ? Theme.fgBright : Theme.fg
             font.family: Theme.font
-            font.pixelSize: Theme.smallSize + 1
+            font.pixelSize: Theme.popupSmallSize + 1
         }
 
         Text {
@@ -145,7 +145,7 @@ BarButton {
             visible: dev.selected
             color: Theme.accent
             font.family: Theme.font
-            font.pixelSize: Theme.fontSize
+            font.pixelSize: Theme.popupFontSize
         }
 
         MouseArea {
@@ -162,7 +162,7 @@ BarButton {
         anchorItem: root
         spacing: 8
 
-        Item { implicitWidth: 460; implicitHeight: 0 }
+        Item { implicitWidth: 380; implicitHeight: 0 }
 
         SectionLabel { text: "Saída" }
 

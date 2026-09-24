@@ -5,7 +5,6 @@ import qs.common
 import qs.components
 
 // Default input. Left = mute, scroll = volume, middle = audio popup.
-// Highlighted while an app is recording from it.
 BarButton {
     id: root
 
@@ -28,7 +27,7 @@ BarButton {
 
     visible: source !== null
     text: Theme.icon(muted ? 0xF036D : 0xF036C)
-    color: muted ? Theme.muted : inUse ? Theme.red : Theme.fg
+    color: muted ? Theme.muted : Theme.fg
     tooltip: "Microfone " + (muted ? "mudo" : Math.round(volume * 100) + "%") + (inUse && !muted ? " · em uso" : "")
 
     onClicked: button => {

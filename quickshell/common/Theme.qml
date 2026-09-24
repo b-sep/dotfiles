@@ -22,7 +22,9 @@ Singleton {
     readonly property color yellow: "#e0af68"
     readonly property color red: "#f7768e"
     readonly property color green: "#9ece6a"
-    readonly property color accent: cyan
+    // Highlight color everywhere (active workspace, sliders, checks, icons) follows
+    // the Hyprland border, like the popup borders.
+    readonly property color accent: popupBorder
 
     property color popupBorder: blue
     readonly property int popupBorderWidth: 2
@@ -32,9 +34,12 @@ Singleton {
     readonly property int iconSize: 19
     readonly property int smallSize: 14
 
+    readonly property int popupFontSize: 15
+    readonly property int popupSmallSize: 12
+
     readonly property int barHeight: 34
     readonly property int popupGap: 6
-    readonly property int popupPadding: 34
+    readonly property int popupPadding: 26
 
     readonly property var locale: Qt.locale("pt_BR")
 

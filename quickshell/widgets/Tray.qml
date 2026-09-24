@@ -29,7 +29,7 @@ Row {
     BarButton {
         text: Theme.icon(root.expanded ? 0xF0142 : 0xF0141)
         pixelSize: Theme.fontSize
-        color: root.pinned ? Theme.accent : Theme.muted
+        color: Theme.muted
         fixedWidth: 24
         tooltip: root.pinned ? "Recolher bandeja" : "Fixar bandeja"
         onClicked: root.pinned = !root.pinned

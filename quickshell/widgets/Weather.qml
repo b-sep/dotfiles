@@ -97,7 +97,7 @@ BarButton {
                     text: Theme.icon(0xF034E)
                     color: Theme.muted
                     font.family: Theme.font
-                    font.pixelSize: Theme.smallSize + 1
+                    font.pixelSize: Theme.popupSmallSize + 1
                 }
                 Text {
                     text: {
@@ -107,7 +107,7 @@ BarButton {
                     }
                     color: Theme.muted
                     font.family: Theme.font
-                    font.pixelSize: Theme.smallSize + 1
+                    font.pixelSize: Theme.popupSmallSize + 1
                 }
             }
 
@@ -118,7 +118,7 @@ BarButton {
                     text: root.current ? root.glyph(root.current.weatherCode, root.isNight()) : ""
                     color: Theme.accent
                     font.family: Theme.font
-                    font.pixelSize: 64
+                    font.pixelSize: 48
                 }
 
                 ColumnLayout {
@@ -127,14 +127,14 @@ BarButton {
                         text: (root.current?.temp_C ?? "") + "°C"
                         color: Theme.fgBright
                         font.family: Theme.font
-                        font.pixelSize: 38
+                        font.pixelSize: 28
                         font.bold: true
                     }
                     Text {
                         text: root.desc(root.current)
                         color: Theme.fg
                         font.family: Theme.font
-                        font.pixelSize: Theme.fontSize
+                        font.pixelSize: Theme.popupFontSize
                     }
                 }
             }
@@ -155,7 +155,7 @@ BarButton {
                     text: Theme.icon(modelData.icon) + " " + modelData.text
                     color: Theme.fg
                     font.family: Theme.font
-                    font.pixelSize: Theme.smallSize + 1
+                    font.pixelSize: Theme.popupSmallSize + 1
                 }
             }
         }
@@ -179,7 +179,7 @@ BarButton {
                     readonly property var noon: modelData.hourly?.[4]
 
                     Layout.fillWidth: true
-                    Layout.minimumWidth: 136
+                    Layout.minimumWidth: 108
                     spacing: 4
 
                     Text {
@@ -187,21 +187,21 @@ BarButton {
                         text: index === 0 ? "Hoje" : root.weekday(modelData.date)
                         color: Theme.muted
                         font.family: Theme.font
-                        font.pixelSize: Theme.smallSize + 1
+                        font.pixelSize: Theme.popupSmallSize + 1
                     }
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: root.glyph(noon?.weatherCode, false)
                         color: Theme.fg
                         font.family: Theme.font
-                        font.pixelSize: 32
+                        font.pixelSize: 24
                     }
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: modelData.maxtempC + "° / " + modelData.mintempC + "°"
                         color: Theme.fg
                         font.family: Theme.font
-                        font.pixelSize: Theme.smallSize + 1
+                        font.pixelSize: Theme.popupSmallSize + 1
                     }
                 }
             }

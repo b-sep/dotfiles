@@ -80,8 +80,8 @@ BarButton {
             spacing: 14
 
             Rectangle {
-                implicitWidth: 150
-                implicitHeight: 150
+                implicitWidth: 112
+                implicitHeight: 112
                 color: Theme.bgAlt
 
                 Text {
@@ -90,7 +90,7 @@ BarButton {
                     text: Theme.icon(0xF075A)
                     color: Theme.muted
                     font.family: Theme.font
-                    font.pixelSize: 56
+                    font.pixelSize: 42
                 }
 
                 Image {
@@ -99,14 +99,14 @@ BarButton {
                     source: root.player?.trackArtUrl ?? ""
                     fillMode: Image.PreserveAspectCrop
                     asynchronous: true
-                    sourceSize.width: 300
-                    sourceSize.height: 300
+                    sourceSize.width: 224
+                    sourceSize.height: 224
                 }
             }
 
             ColumnLayout {
                 spacing: 4
-                Layout.preferredWidth: 320
+                Layout.preferredWidth: 260
 
                 Text {
                     Layout.fillWidth: true
@@ -114,7 +114,7 @@ BarButton {
                     elide: Text.ElideRight
                     color: Theme.fgBright
                     font.family: Theme.font
-                    font.pixelSize: Theme.fontSize
+                    font.pixelSize: Theme.popupFontSize
                     font.bold: true
                 }
 
@@ -125,7 +125,7 @@ BarButton {
                     elide: Text.ElideRight
                     color: Theme.fg
                     font.family: Theme.font
-                    font.pixelSize: Theme.fontSize - 1
+                    font.pixelSize: Theme.popupFontSize - 1
                 }
 
                 Text {
@@ -135,7 +135,7 @@ BarButton {
                     elide: Text.ElideRight
                     color: Theme.muted
                     font.family: Theme.font
-                    font.pixelSize: Theme.smallSize
+                    font.pixelSize: Theme.popupSmallSize
                 }
 
                 Item { Layout.fillHeight: true }
@@ -166,7 +166,7 @@ BarButton {
                         text: root.player?.identity ?? ""
                         color: Theme.muted
                         font.family: Theme.font
-                        font.pixelSize: Theme.smallSize
+                        font.pixelSize: Theme.popupSmallSize
                     }
                 }
             }
@@ -191,14 +191,14 @@ BarButton {
                     text: root.fmtTime(root.player?.position ?? 0)
                     color: Theme.muted
                     font.family: Theme.font
-                    font.pixelSize: Theme.smallSize
+                    font.pixelSize: Theme.popupSmallSize
                 }
                 Item { Layout.fillWidth: true }
                 Text {
                     text: root.fmtTime(root.player?.length ?? 0)
                     color: Theme.muted
                     font.family: Theme.font
-                    font.pixelSize: Theme.smallSize
+                    font.pixelSize: Theme.popupSmallSize
                 }
             }
         }

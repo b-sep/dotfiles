@@ -3,10 +3,9 @@ import Quickshell
 import qs.common
 import qs.widgets
 
-// Layout inspired by the Omarchy 4 bar:
 //   left: workspaces
 //   center: clock + weather (always centered as a group), media + recording to their left
-//   right: tray drawer, microphone, audio, night light, do-not-disturb
+//   right: tray drawer, microphone, audio, network, night light, do-not-disturb
 PanelWindow {
     id: bar
 
@@ -50,6 +49,7 @@ PanelWindow {
         Tray {}
         Microphone { audioWidget: audio }
         Audio { id: audio }
+        Network {}
         NightLight {}
         DoNotDisturb {}
     }

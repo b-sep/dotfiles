@@ -4,7 +4,7 @@ import qs.common
 import qs.components
 
 // Workspaces 1-5 always, plus any other existing ones up to 10.
-// Focused = dot glyph, occupied = full opacity, empty = dimmed.
+// Focused = number in the Hyprland border color, occupied = full opacity, empty = dimmed.
 Row {
     id: root
 
@@ -33,9 +33,9 @@ Row {
             readonly property bool occupied: ws !== undefined && ws.toplevels.values.length > 0
 
             fixedWidth: 32
-            text: focused ? Theme.icon(0xF14FB) : (modelData === 10 ? "0" : String(modelData))
-            pixelSize: focused ? Theme.iconSize : Theme.fontSize
-            color: focused ? Theme.accent : Theme.fg
+            text: modelData === 10 ? "0" : String(modelData)
+            pixelSize: Theme.fontSize
+            color: focused ? Theme.popupBorder : Theme.fg
             opacity: focused || occupied ? 1 : 0.45
 
             onClicked: root.focusWorkspace(modelData)
