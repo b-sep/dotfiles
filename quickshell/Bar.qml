@@ -4,8 +4,8 @@ import qs.common
 import qs.widgets
 
 //   left: workspaces
-//   center: clock + weather (always centered as a group), media + recording to their left
-//   right: tray drawer, microphone, audio, network, night light, do-not-disturb
+//   center: clock + weather (always centered as a group)
+//   right: recording indicator (only while recording), tray drawer, microphone, audio, network, night light, do-not-disturb
 PanelWindow {
     id: bar
 
@@ -25,15 +25,6 @@ PanelWindow {
     }
 
     Row {
-        anchors.right: center.left
-        anchors.verticalCenter: parent.verticalCenter
-        spacing: 4
-
-        Media {}
-        ScreenRecording {}
-    }
-
-    Row {
         id: center
         anchors.centerIn: parent
 
@@ -46,6 +37,7 @@ PanelWindow {
         anchors.rightMargin: 4
         anchors.verticalCenter: parent.verticalCenter
 
+        ScreenRecording {}
         Tray {}
         Microphone { audioWidget: audio }
         Audio { id: audio }

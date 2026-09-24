@@ -17,7 +17,7 @@ BarButton {
     color: Theme.red
     opacity: blinkOff ? 0.35 : 1
     Behavior on opacity { NumberAnimation { duration: 150 } }
-    tooltip: "Parar gravação"
+    tooltip: "Stop recording"
 
     // capture-record toggles: while recording, running it stops and saves
     onClicked: Quickshell.execDetached(["capture-record"])

@@ -10,7 +10,6 @@
     ./modules/fonts.nix
     ./modules/programs.nix
     ./modules/services.nix
-    ./modules/screenshot.nix
   ];
 
   # TODO: install livebook https://nixos.org/manual/nixos/stable/#module-services-livebook

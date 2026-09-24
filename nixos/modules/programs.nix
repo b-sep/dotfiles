@@ -11,6 +11,10 @@ in
     # but kept explicit here since evince's need is independent of ibus)
     dconf = { enable = true; };
 
+    # gpu-screen-recorder needs a capability wrapper for KMS capture,
+    # so it lives at system level; the capture scripts are in modules/screenshot.nix (home-manager)
+    gpu-screen-recorder = { enable = true; };
+
     hyprland = {
       enable = true;
       package = inputs.hyprland.packages.${system}.hyprland;
