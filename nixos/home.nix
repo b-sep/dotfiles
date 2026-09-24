@@ -78,6 +78,45 @@
       enable = true;
 
       settings = {
+        global = {
+          width = 350;
+          height = "(0, 300)";
+          origin = "top-right";
+          offset = "(10, 10)";
+          gap_size = 0;
+          padding = 9;
+          horizontal_padding = 12;
+          frame_width = 2;
+          separator_height = 0;
+          corner_radius = 0;
+          font = "Sans 11";
+          alignment = "center";
+          vertical_alignment = "center";
+          markup = "full";
+          format = "<b>%s</b>\\n%b";
+          icon_position = "off";
+          background = "#1d1918";
+          mouse_left_click = "do_action, close_current";
+        };
+
+        urgency_low = {
+          foreground = "#458588";
+          frame_color = "#458588";
+          timeout = 5;
+        };
+
+        urgency_normal = {
+          foreground = "#689d6a";
+          frame_color = "#689d6a";
+          timeout = 10;
+        };
+
+        urgency_critical = {
+          foreground = "#cc5b3e";
+          frame_color = "#cc5b3e";
+          timeout = 0;
+        };
+
         # IBus always shows this on login on non-GNOME/KDE Wayland sessions,
         # even when correctly configured. Harmless, just noise; drop it.
         ignore_ibus_wayland_notice = {
