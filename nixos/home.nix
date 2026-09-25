@@ -4,6 +4,7 @@
 
 {
   imports = [
+    ./modules/dictation.nix
     ./modules/programs
     ./modules/screenshot.nix
   ];
