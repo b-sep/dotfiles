@@ -4,7 +4,7 @@ import qs.common
 import qs.components
 
 // Screen recording indicator: only visible while capture-record is recording, blinking red.
-// Click to stop the recording.
+// Left click to stop the recording.
 BarButton {
     id: root
 
@@ -19,8 +19,10 @@ BarButton {
     Behavior on opacity { NumberAnimation { duration: 150 } }
     tooltip: "Stop recording"
 
-    // capture-record toggles: while recording, running it stops and saves
-    onClicked: Quickshell.execDetached(["capture-record"])
+    // left click only: stops the recording; capture-record then saves, copies and notifies
+    onClicked: button => {
+        if (button === Qt.LeftButton) Quickshell.execDetached(["capture-record", "stop"])
+    }
 
     Timer {
         interval: 800

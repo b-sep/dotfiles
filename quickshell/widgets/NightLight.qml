@@ -10,39 +10,37 @@ import qs.components
 BarButton {
     id: root
 
-    readonly property int offTemp: 6500
     readonly property int minTemp: 2500
     readonly property int maxTemp: 6000
 
     property bool available: false
-    property int temperature: offTemp
-    // Tone applied when turning on; follows the live temperature while on.
-    property int nightTemp: 4000
-    readonly property bool night: temperature < maxTemp + 1
+    // On/off is hyprsunset's identity flag; the temperature is the tone. While
+    // off, the tone only lives here and is sent when turning on.
+    property bool night: false
+    property int temperature: 4000
+    property bool synced: false
 
     // Slider goes left = neutral, right = warmer.
-    readonly property real toneValue: (maxTemp - nightTemp) / (maxTemp - minTemp)
+    readonly property real toneValue: (maxTemp - temperature) / (maxTemp - minTemp)
 
-    // Off sets a neutral 6500K instead of `identity`: identity keeps reporting the
-    // last temperature, so the state would read back as still on.
-    function apply(temp) {
-        if (temp === temperature) return
-        Quickshell.execDetached(["hyprctl", "hyprsunset", "temperature", String(temp)])
-        temperature = temp
+    function setNight(on) {
+        // Setting a temperature also clears identity in hyprsunset.
+        var args = on ? ["temperature", String(temperature)] : ["identity", "true"]
+        Quickshell.execDetached(["hyprctl", "hyprsunset"].concat(args))
+        night = on
     }
-
-    function setNight(on) { apply(on ? nightTemp : offTemp) }
 
     function setTone(v) {
         var t = Math.round((maxTemp - Math.max(0, Math.min(1, v)) * (maxTemp - minTemp)) / 100) * 100
-        nightTemp = t
-        if (night) apply(t)
+        if (t === temperature) return
+        temperature = t
+        if (night) Quickshell.execDetached(["hyprctl", "hyprsunset", "temperature", String(t)])
     }
 
     visible: available
     text: Theme.icon(0xF050E)
     color: night ? Theme.yellow : Theme.fg
-    tooltip: night ? "Luz noturna " + temperature + "K" : "Luz noturna"
+    tooltip: night ? "Luz noturna " + Math.round(toneValue * 100) + "% (" + temperature + "K)" : "Luz noturna"
 
     onClicked: button => {
         if (button === Qt.RightButton) setNight(!night)
@@ -52,14 +50,16 @@ BarButton {
 
     Process {
         id: check
-        command: ["hyprctl", "hyprsunset", "temperature"]
+        command: ["sh", "-c", "hyprctl hyprsunset identity get && hyprctl hyprsunset temperature"]
         stdout: StdioCollector {
             onStreamFinished: {
-                var m = text.match(/^\s*(\d+)/)
+                var m = text.match(/^\s*(true|false)\s+(\d+)/)
                 root.available = m !== null
                 if (!m) return
-                root.temperature = parseInt(m[1])
-                if (root.night) root.nightTemp = root.temperature
+                root.night = m[1] === "false"
+                // While off, keep the locally picked tone instead of the daemon's.
+                if (root.night || !root.synced) root.temperature = parseInt(m[2])
+                root.synced = true
             }
         }
     }
@@ -125,7 +125,7 @@ BarButton {
             Text {
                 Layout.preferredWidth: 56
                 horizontalAlignment: Text.AlignRight
-                text: root.nightTemp + "K"
+                text: Math.round(root.toneValue * 100) + "%"
                 color: Theme.muted
                 font.family: Theme.font
                 font.pixelSize: Theme.popupSmallSize + 1

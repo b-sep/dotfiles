@@ -1,16 +1,24 @@
 { pkgs, ... }:
 
-# Omarchy-style screen capture:
-#   - screenshot: grim + slurp (screen frozen with hyprpicker), saved + copied; satty on notification click
-#   - recording:  gpu-screen-recorder (GPU encoding), region picked with slurp
-# Keybinds live in hyprland.lua (Print, Shift+Print, Alt+Print, ...).
-
 let
   focusedMonitor = ''hyprctl monitors -j | jq -r '.[] | select(.focused) | .name' '';
 
+  sattyConfig = (pkgs.formats.toml { }).generate "satty.toml" {
+    general = {
+      initial-tool = "arrow";
+      copy-command = "wl-copy";
+      # Enter and Escape do nothing (satty defaults: copy and exit). Empty lists
+      # are only possible in the config file, not as flags. Ctrl+S saves.
+      actions-on-enter = [ ];
+      actions-on-escape = [ ];
+      # only the "Screenshot saved" notification from capture-screenshot
+      disable-notifications = true;
+    };
+  };
+
   capture-screenshot = pkgs.writeShellApplication {
     name = "capture-screenshot";
-    runtimeInputs = with pkgs; [ grim slurp satty hyprpicker wl-clipboard jq hyprland coreutils libnotify ];
+    runtimeInputs = with pkgs; [ grim slurp satty hyprpicker wl-clipboard inotify-tools jq hyprland coreutils libnotify ];
     text = ''
       dir="''${XDG_PICTURES_DIR:-$HOME/Pictures}/Screenshots"
       mkdir -p "$dir"
@@ -39,13 +47,14 @@ let
         --action=default=Edit --action=edit=Edit \
         "Screenshot saved" "$file")
       if [[ "$action" == default || "$action" == edit ]]; then
-        # Enter overwrites the screenshot with the annotated version and copies it again
-        satty --filename "$file" \
-          --output-filename "$file" \
-          --copy-command wl-copy \
-          --early-exit \
-          --actions-on-enter save-to-clipboard,save-to-file \
-          --initial-tool arrow
+        # satty's Ctrl+S only saves (hardcoded); copy every save to the clipboard.
+        # $! is inotifywait's PID, killing it ends the copy loop too
+        inotifywait -m -q -e close_write "$file" > >(
+          while read -r _; do wl-copy --type image/png <"$file"; done
+        ) &
+        watcher=$!
+        satty --config ${sattyConfig} --filename "$file" --output-filename "$file" || true
+        kill "$watcher"
       fi
     '';
   };
@@ -53,27 +62,29 @@ let
   capture-record = pkgs.writeShellApplication {
     name = "capture-record";
     # gpu-screen-recorder comes from the capability wrapper in /run/wrappers
-    runtimeInputs = with pkgs; [ slurp jq hyprland libnotify xdg-utils coreutils procps ];
+    runtimeInputs = with pkgs; [ slurp jq hyprland libnotify xdg-utils wl-clipboard coreutils ];
     text = ''
-      state="''${XDG_RUNTIME_DIR:-/run/user/$UID}/capture-record.file"
+      # PID of the running recorder. Matching by process name doesn't work:
+      # the kernel truncates it to 15 chars ("gpu-screen-reco").
+      pidfile="''${XDG_RUNTIME_DIR:-/run/user/$UID}/capture-record.pid"
 
-      if pgrep -x gpu-screen-recorder >/dev/null; then
-        pkill -INT -x gpu-screen-recorder
-        while pgrep -x gpu-screen-recorder >/dev/null; do sleep 0.1; done
-        file=$(cat "$state" 2>/dev/null || true)
-        rm -f "$state"
-        (
-          action=$(notify-send -a Capture --action=open=Open "Recording saved" "$file")
-          [[ "$action" == open ]] && xdg-open "$file"
-        ) &
+      recording() { [[ -s "$pidfile" ]] && kill -0 "$(cat "$pidfile")" 2>/dev/null; }
+
+      # "stop" is only used by the bar button; the instance that started the
+      # recording saves, notifies and copies it once the recorder exits
+      if [[ "''${1:-}" == stop ]]; then
+        if recording; then kill -INT "$(cat "$pidfile")"; fi
         exit 0
       fi
 
-      dir="''${XDG_VIDEOS_DIR:-$HOME/Videos}/Recordings"
+      # shortcuts never stop a recording, and never start a second one
+      if recording; then exit 0; fi
+
+      dir="''${XDG_VIDEOS_DIR:-$HOME/Videos}"
       mkdir -p "$dir"
       file="$dir/recording-$(date +%Y-%m-%d_%H-%M-%S).mp4"
 
-      target=(-w focused)
+      target=(-w "$(${focusedMonitor})")
       audio=()
       for arg in "$@"; do
         case "$arg" in
@@ -82,20 +93,36 @@ let
             target=(-w region -region "$geom")
             ;;
           full) ;;
-          audio) audio=(-a default_output) ;;
-          *) echo "usage: capture-record [region|full] [audio]" >&2; exit 1 ;;
+          # desktop audio + microphone, merged into a single track
+          audio) audio=(-a "default_output|default_input") ;;
+          *) echo "usage: capture-record [region|full] [audio] | stop" >&2; exit 1 ;;
         esac
       done
 
-      echo "$file" >"$state"
-      notify-send -a Capture -t 1500 "Recording" "Press the shortcut again to stop"
-
-      # notify the bar indicator (quickshell) on start and on finish,
-      # even if the recorder exits on its own
+      # tell the bar indicator (quickshell) when recording starts and stops
       bar() { qs -c bar ipc call recording set "$1" >/dev/null 2>&1 || true; }
+
+      gpu-screen-recorder "''${target[@]}" "''${audio[@]}" -f 60 -k auto -fallback-cpu-encoding yes -o "$file" &
+      pid=$!
+      echo "$pid" >"$pidfile"
       bar true
-      gpu-screen-recorder "''${target[@]}" "''${audio[@]}" -f 60 -k auto -fallback-cpu-encoding yes -o "$file" || true
+      notify-send -a Capture -t 1500 "Recording started"
+
+      # runs however the recorder ends: bar click or crash
+      status=0
+      wait "$pid" || status=$?
+      rm -f "$pidfile"
       bar false
+
+      if [[ -s "$file" ]]; then
+        # a video can't go to the clipboard as raw data; copy it as a file
+        # reference, which file managers, browsers and chat apps paste as a file
+        wl-copy --type text/uri-list "file://$file"
+        action=$(notify-send -a Capture --action=default=Open --action=open=Open "Recording saved" "$file")
+        if [[ "$action" == default || "$action" == open ]]; then xdg-open "$file"; fi
+      else
+        notify-send -a Capture -u critical "Recording failed" "gpu-screen-recorder exited with status $status"
+      fi
     '';
   };
 in {
