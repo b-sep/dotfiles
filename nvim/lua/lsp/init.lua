@@ -9,6 +9,7 @@ local servers = {
   'elixirls',
   'html',
   'lua_ls',
+  'rust_analyzer',
   'solargraph',
   'ts_ls'
 }

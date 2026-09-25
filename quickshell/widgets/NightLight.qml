@@ -40,7 +40,7 @@ BarButton {
     visible: available
     text: Theme.icon(0xF050E)
     color: night ? Theme.yellow : Theme.fg
-    tooltip: night ? "Luz noturna " + Math.round(toneValue * 100) + "% (" + temperature + "K)" : "Luz noturna"
+    tooltip: night ? "Luz noturna " + temperature + "K" : "Luz noturna"
 
     onClicked: button => {
         if (button === Qt.RightButton) setNight(!night)
@@ -125,7 +125,7 @@ BarButton {
             Text {
                 Layout.preferredWidth: 56
                 horizontalAlignment: Text.AlignRight
-                text: Math.round(root.toneValue * 100) + "%"
+                text: root.temperature + "K"
                 color: Theme.muted
                 font.family: Theme.font
                 font.pixelSize: Theme.popupSmallSize + 1
