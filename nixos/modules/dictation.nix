@@ -2,7 +2,7 @@
 
 # https://voxtype.io
 #
-# Local push-to-talk dictation, set up like Omarchy's voxtype integration:
+# Local push-to-talk dictation
 # the daemon runs as a user service, the keys are Hyprland binds (hotkey
 # disabled here) and the text is typed into the focused window, so it works
 # in any app (Claude Code / opencode in the terminal, VS Code, browser...).

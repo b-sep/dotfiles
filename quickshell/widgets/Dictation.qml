@@ -4,7 +4,7 @@ import Quickshell.Io
 import qs.common
 import qs.components
 
-// Dictation indicator (voxtype): only visible while recording (red) or transcribing (yellow).
+// Dictation indicator (voxtype): only visible while recording (accent) or transcribing (yellow).
 // Left click stops and transcribes, right click cancels.
 BarButton {
     id: root
@@ -15,8 +15,9 @@ BarButton {
 
     visible: recording || status === "transcribing"
     fixedWidth: 30
-    text: Theme.icon(recording ? 0xF036C : 0xF051F)
-    color: recording ? Theme.red : Theme.yellow
+    // md-account_voice / md-timer_sand: the microphone glyph is already the input widget
+    text: Theme.icon(recording ? 0xF05CB : 0xF051F)
+    color: recording ? Theme.accent : Theme.yellow
     tooltip: recording ? "Ditando · clique para transcrever, direito para cancelar" : "Transcrevendo"
 
     onClicked: button => {
