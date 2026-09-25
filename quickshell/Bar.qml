@@ -5,7 +5,7 @@ import qs.widgets
 
 //   left: workspaces
 //   center: clock + weather (always centered as a group)
-//   right: tray drawer, recording indicator (only while recording), microphone, audio, network, night light, do-not-disturb
+//   right: tray drawer, recording indicator (only while recording), microphone, audio, network, night light, do-not-disturb, clipboard history
 PanelWindow {
     id: bar
 
@@ -44,5 +44,6 @@ PanelWindow {
         Network {}
         NightLight {}
         DoNotDisturb {}
+        Clipboard {}
     }
 }

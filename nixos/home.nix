@@ -75,6 +75,11 @@
 
   # services #
   services = {
+    # clipboard history (text and images), read by the quickshell bar
+    cliphist = {
+      enable = true;
+    };
+
     dunst = {
       enable = true;
 
