@@ -3,13 +3,16 @@
 {
   services = {
     displayManager = {
-      # gdm = {
-      #   enable = true;
-      # };
+      autoLogin = {
+        enable = true;
+        user = "junior";
+      };
+
+      defaultSession = "hyprland-uwsm";
 
       sddm = {
         enable = true;
-        wayland.enable = false;
+        wayland.enable = true;
       };
     };
 
@@ -22,8 +25,5 @@
       pulse.enable = true;
       wireplumber.enable = true;
     };
-
-    # for sddm
-    xserver.enable = true;
   };
 }

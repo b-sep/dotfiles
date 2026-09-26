@@ -6,6 +6,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./home-disk.nix
     ./modules/nvidia.nix
     ./modules/fonts.nix
     ./modules/programs.nix
