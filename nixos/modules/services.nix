@@ -3,9 +3,12 @@
 {
   services = {
     displayManager = {
-      # gdm = {
-      #   enable = true;
-      # };
+      autoLogin = {
+        enable = true;
+        user = "junior";
+      };
+
+      defaultSession = "hyprland-uwsm";
 
       sddm = {
         enable = true;
