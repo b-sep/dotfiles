@@ -3,9 +3,6 @@ import Quickshell
 import qs.common
 import qs.widgets
 
-//   left: workspaces
-//   center: clock + weather (always centered as a group)
-//   right: tray drawer, recording and dictation indicators (only while active), microphone, audio, network, night light, do-not-disturb, clipboard history
 PanelWindow {
     id: bar
 
@@ -37,6 +34,7 @@ PanelWindow {
         anchors.rightMargin: 4
         anchors.verticalCenter: parent.verticalCenter
 
+        Media {}
         Tray {}
         ScreenRecording {}
         Dictation {}
