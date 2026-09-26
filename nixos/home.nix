@@ -28,6 +28,7 @@
       loupe
       man-pages
       mlocate
+      playerctl
       tree
       valgrind
     ];

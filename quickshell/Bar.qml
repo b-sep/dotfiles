@@ -5,7 +5,7 @@ import qs.widgets
 
 //   left: workspaces
 //   center: clock + weather (always centered as a group)
-//   right: tray drawer, recording indicator (only while recording), microphone, audio, network, night light, do-not-disturb, clipboard history
+//   right: media controls (only while a track is playing/paused), tray drawer, recording indicator (only while recording), microphone, audio, network, night light, do-not-disturb, clipboard history
 PanelWindow {
     id: bar
 
@@ -37,6 +37,7 @@ PanelWindow {
         anchors.rightMargin: 4
         anchors.verticalCenter: parent.verticalCenter
 
+        Media {}
         Tray {}
         ScreenRecording {}
         Microphone { audioWidget: audio }
