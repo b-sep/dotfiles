@@ -60,6 +60,8 @@
     };
   };
 
+  systemd.services.NetworkManager-wait-online.enable = false;
+
   # Set your time zone.
   time.timeZone = "America/Sao_Paulo";
 
@@ -76,6 +78,7 @@
 
   virtualisation.docker = {
     enable = true;
+    enableOnBoot = false;
   };
  
   nix = {
