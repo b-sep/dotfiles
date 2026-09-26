@@ -12,7 +12,7 @@
 
       sddm = {
         enable = true;
-        wayland.enable = false;
+        wayland.enable = true;
       };
     };
 
@@ -27,8 +27,5 @@
       pulse.enable = true;
       wireplumber.enable = true;
     };
-
-    # for sddm
-    xserver.enable = true;
   };
 }
