@@ -163,20 +163,16 @@
     opencode = {
       enable = true;
       enableMcpIntegration = true;
-      package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
+      mutableSettings = true; # avoids collisions with files OpenCode rewrites
+      package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode2;
+
+      # cli = {
+      #   theme = {};
+      # };
     };
 
     ripgrep = {
       enable = true;
-    };
-
-    tmux = {
-      enable = true;
-    };
-
-    vscode = {
-      enable = true;
-      mutableExtensionsDir = true;
     };
   };
 }

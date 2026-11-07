@@ -19,7 +19,7 @@
       lg   = "lazygit";
       ls   = "ls --hyperlink=auto --color=auto";
       ncg  = "nix-collect-garbage -d";
-      oc   = "opencode";
+      oc   = "opencode2";
     };
   };
 }
