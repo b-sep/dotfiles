@@ -11,11 +11,6 @@
   ];
 
   programs = {
-    anki = {
-      enable = true;
-      theme = "followSystem";
-    };
-
     bat = {
       enable = true;
     };
