@@ -24,6 +24,9 @@
       gnumake
       hyprpaper
       hyprpicker
+      # inputs.openbot.packages.${pkgs.stdenv.hostPlatform.system}.default
+      inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.hermes-agent
+      inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.hermes-desktop
       insomnia
       logisim-evolution
       loupe
@@ -46,6 +49,15 @@
 
     sessionVariables = {
       EDITOR = "nvim";
+
+      # required for GTK4 apps (e.g. Ghostty) to honor the XKB compose key
+      # (compose:rctrl, set in hyprland.lua). Modern GTK4 no longer handles
+      # compose locally on Wayland; it must be pointed at ibus. Do NOT set
+      # QT_IM_MODULE/XMODIFIERS here: i18n.inputMethod already exports them
+      # at system level, and hardcoding them here would shadow that module
+      # if the input method ever changes.
+      # https://github.com/ghostty-org/ghostty/discussions/9250
+      GTK_IM_MODULE = "ibus";
     };
   };
 

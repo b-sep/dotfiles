@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ config, inputs, lib, pkgs, ... }:
 
 {
   imports = [
@@ -11,6 +11,17 @@
   ];
 
   programs = {
+    antigravity = {
+      enable = true;
+      package = pkgs.antigravity-ide;
+    };
+
+    antigravity-cli = {
+      enable = true;
+      enableMcpIntegration = true;
+      package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.antigravity-cli;
+    };
+
     bat = {
       enable = true;
     };
@@ -21,13 +32,7 @@
 
     claude-code = {
       enable = true;
-      mcpServers = {
-        github = {
-          headers.Authorization = "Bearer \${GITHUB_PERSONAL_TOKEN}";
-          type = "http";
-          url = "https://api.githubcopilot.com/mcp/";
-        };
-      };
+      enableMcpIntegration = true;
       package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code;
       skills = {
         teach = "${inputs.mattpocock-skills}/skills/productivity/teach";
@@ -138,8 +143,9 @@
       enable = true;
       servers = {
         github = {
-          headers.Authorization = "Bearer {env:GITHUB_PERSONAL_TOKEN}";
-          url = "https://api.githubcopilot.com/mcp/";
+          args = ["stdio"];
+          command = lib.getExe pkgs.github-mcp-server;
+          env.GITHUB_PERSONAL_ACCESS_TOKEN.file = "${config.home.homeDirectory}/.config/ghmcp.txt";
         };
       };
     };

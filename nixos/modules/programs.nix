@@ -6,6 +6,11 @@ in
 
 {
   programs = {
+    appimage = {
+      enable = true;
+      binfmt = true;
+    };
+
     # https://gitlab.gnome.org/GNOME/dconf
     # used by evince (also force-enabled by i18n.inputMethod's ibus module,
     # but kept explicit here since evince's need is independent of ibus)

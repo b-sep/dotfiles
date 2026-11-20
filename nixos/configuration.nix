@@ -13,9 +13,6 @@
     ./modules/services.nix
   ];
 
-  # TODO: install livebook https://nixos.org/manual/nixos/stable/#module-services-livebook
-  # TODO: certificate https://nixos.org/manual/nixos/stable/#module-security-acme
-
   boot = {
     # Use latest kernel.
     kernelPackages = pkgs.linuxPackages_latest;
