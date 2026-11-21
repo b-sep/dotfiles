@@ -7,6 +7,7 @@
     ./modules/dictation.nix
     ./modules/programs
     ./modules/screenshot.nix
+    ./modules/windows-vm.nix
   ];
 
   home = {

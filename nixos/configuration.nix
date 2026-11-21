@@ -14,6 +14,9 @@
   ];
 
   boot = {
+    # Load KVM for AMD CPUs (/dev/kvm), used by modules/windows-vm.nix.
+    kernelModules = [ "kvm-amd" ];
+
     # Use latest kernel.
     kernelPackages = pkgs.linuxPackages_latest;
 
@@ -67,6 +70,7 @@
     description = "Roberto Júnior";
     extraGroups = [
       "docker"
+      "kvm"
       "networkmanager"
       "wheel"
     ];

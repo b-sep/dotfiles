@@ -1,5 +1,18 @@
 { config, inputs, lib, pkgs, ... }:
 
+let
+  system = pkgs.stdenv.hostPlatform.system;
+  mcpRemote = inputs.llm-agents.packages.${system}.mcp-remote;
+
+  auvpMcp = pkgs.writeShellScript "mcp-auvp" ''
+    token=''${AUVP_API_KEY//[$'\r\n']/}
+    exec ${lib.getExe mcpRemote} \
+      https://financas-api.auvp.com.br/mcp \
+      --transport http-only \
+      --header "x-api-key: $token"
+  '';
+in
+
 {
   imports = [
     ./bash
@@ -19,7 +32,7 @@
     antigravity-cli = {
       enable = true;
       enableMcpIntegration = true;
-      package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.antigravity-cli;
+      package = inputs.llm-agents.packages.${system}.antigravity-cli;
     };
 
     bat = {
@@ -33,7 +46,7 @@
     claude-code = {
       enable = true;
       enableMcpIntegration = true;
-      package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code;
+      package = inputs.llm-agents.packages.${system}.claude-code;
       skills = {
         teach = "${inputs.mattpocock-skills}/skills/productivity/teach";
       };
@@ -142,6 +155,10 @@
     mcp = {
       enable = true;
       servers = {
+        auvp = {
+          command = "${auvpMcp}";
+          env.AUVP_API_KEY.file = "${config.home.homeDirectory}/.config/auvp-mcp.txt";
+        };
         github = {
           args = ["stdio"];
           command = lib.getExe pkgs.github-mcp-server;
@@ -165,7 +182,7 @@
       enable = true;
       enableMcpIntegration = true;
       mutableSettings = true; # avoids collisions with files OpenCode rewrites
-      package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode2;
+      package = inputs.llm-agents.packages.${system}.opencode2;
 
       # cli = {
       #   theme = {};
