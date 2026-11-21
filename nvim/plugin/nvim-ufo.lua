@@ -1,3 +1,8 @@
+vim.pack.add({
+  'https://github.com/kevinhwang91/promise-async',
+  'https://github.com/kevinhwang91/nvim-ufo',
+})
+
 local handler_virt_text = function(virtText, lnum, endLnum, width, truncate)
   local newVirtText = {}
   local suffix = (' 󰁂 %d '):format(endLnum - lnum)
@@ -25,25 +30,19 @@ local handler_virt_text = function(virtText, lnum, endLnum, width, truncate)
   return newVirtText
 end
 
-return {
-  'kevinhwang91/nvim-ufo',
-  dependencies = {
-    'kevinhwang91/promise-async',
-  },
-  event = 'BufReadPost',
-  opts = {
-    provider_selector = function()
-      return { 'indent' }
-    end,
-    open_fold_hl_timeout = 0,
-    fold_virt_text_handler = handler_virt_text
-  },
-  init = function()
-    vim.o.foldcolumn = '0'
-    vim.o.foldlevel = 99
-    vim.o.foldlevelstart = 99
-    vim.o.foldenable = true
-    vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-    vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
-  end
-}
+vim.o.foldcolumn = '0'
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+
+local ufo = require('ufo')
+vim.keymap.set('n', 'zR', ufo.openAllFolds)
+vim.keymap.set('n', 'zM', ufo.closeAllFolds)
+
+ufo.setup({
+  provider_selector = function()
+    return { 'indent' }
+  end,
+  open_fold_hl_timeout = 0,
+  fold_virt_text_handler = handler_virt_text,
+})

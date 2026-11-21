@@ -21,7 +21,13 @@ keymap('n', '<C-k>', '<C-w>k', opts)
 keymap('n', '<C-\\>', '<cmd>vsp<cr>', opts)
 keymap('n', '<A-,>', '<Cmd>sp<CR>', opts)
 keymap('n', '<A-z>', '<Cmd>set wrap!<CR>', opts)
-keymap('n', '<A-p>', '<Cmd>MarkdownPreviewToggle<CR>', opts)
+keymap('n', '<A-p>', function()
+  if require('livepreview').is_running() then
+    vim.cmd('LivePreview close')
+  else
+    vim.cmd('LivePreview start')
+  end
+end, opts)
 keymap('n', '<C-w>', '<Cmd>Bdelete<CR>', opts)
 keymap('n', '<A-f>', '<Cmd>Telescope buffers<CR>', opts)
 keymap('n', '<C-b>', function() custom_picker('help_tags') end, opts)
