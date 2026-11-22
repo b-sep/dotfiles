@@ -2,6 +2,7 @@
 
 let
   system = pkgs.stdenv.hostPlatform.system;
+  agentsMd = ../../../shared/AGENTS.md;
   mcpRemote = inputs.llm-agents.packages.${system}.mcp-remote;
 
   auvpMcp = pkgs.writeShellScript "mcp-auvp" ''
@@ -30,6 +31,7 @@ in
     };
 
     antigravity-cli = {
+      context = { AGENTS = agentsMd; };
       enable = true;
       enableMcpIntegration = true;
       package = inputs.llm-agents.packages.${system}.antigravity-cli;
@@ -44,6 +46,7 @@ in
     };
 
     claude-code = {
+      context = agentsMd;
       enable = true;
       enableMcpIntegration = true;
       package = inputs.llm-agents.packages.${system}.claude-code;
@@ -179,6 +182,7 @@ in
     };
 
     opencode = {
+      context = agentsMd;
       enable = true;
       enableMcpIntegration = true;
       mutableSettings = true; # avoids collisions with files OpenCode rewrites
