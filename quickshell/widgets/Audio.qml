@@ -21,8 +21,6 @@ BarButton {
     // Playback streams publish as sinks; capture streams (incl. our own meters) don't.
     readonly property var streams: nodes.filter(n => n.audio && n.isSink && n.isStream)
 
-    function openPopup() { popup.open = true }
-
     function volumeIcon(isMuted, vol) {
         if (isMuted) return Theme.icon(0xF075F)
         if (vol < 0.34) return Theme.icon(0xF057F)

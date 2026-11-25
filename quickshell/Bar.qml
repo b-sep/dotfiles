@@ -38,11 +38,10 @@ PanelWindow {
         Tray {}
         ScreenRecording {}
         Dictation {}
-        Microphone { audioWidget: audio }
-        Audio { id: audio }
+        Audio {}
         Network {}
         NightLight {}
-        DoNotDisturb {}
         Clipboard {}
+        Power {}
     }
 }
