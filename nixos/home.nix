@@ -1,7 +1,8 @@
-{ config, inputs, pkgs, ... }:
-
 # https://nix-community.github.io/home-manager/preface.html
-
+{ config, inputs, pkgs, ... }:
+let
+  system = pkgs.stdenv.hostPlatform.system;
+in
 {
   imports = [
     ./modules/dictation.nix
@@ -25,9 +26,17 @@
       gnumake
       hyprpaper
       hyprpicker
-      # inputs.openbot.packages.${pkgs.stdenv.hostPlatform.system}.default
-      inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.hermes-agent
-      inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.hermes-desktop
+      # Upstream nix/package.nix expects "Exec=AppRun --no-sandbox %U", but
+      # 0.76.1 ships "Exec=AppRun %U" in openbot.desktop. Remove when fixed upstream.
+      (inputs.openbot.packages.${system}.default.overrideAttrs (old: {
+        buildCommand = builtins.replaceStrings
+          [ "--replace-fail 'Exec=AppRun --no-sandbox %U'" ]
+          [ "--replace-warn 'Exec=AppRun --no-sandbox %U' 'Exec=openbot %U' --replace-warn 'Exec=AppRun %U'" ]
+          old.buildCommand;
+      }))
+      inputs.llm-agents.packages.${system}.hermes-agent
+      inputs.llm-agents.packages.${system}.hermes-desktop
+      inputs.llm-agents.packages.${system}.orca
       insomnia
       logisim-evolution
       loupe

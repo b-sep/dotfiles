@@ -27,10 +27,10 @@
       url = "github:NixOS/nixpkgs/nixos-unstable";
     };
 
-    # openbot = {
-    #   url = "github:nightly-labs/openbot";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    openbot = {
+      url = "github:nightly-labs/openbot";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {home-manager, nixpkgs, ...} @ inputs: {

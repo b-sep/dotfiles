@@ -27,5 +27,9 @@ in
       withUWSM = true;
       xwayland.enable = true;
     };
+
+    nix-ld = {
+      enable = true;
+    };
   };
 }
